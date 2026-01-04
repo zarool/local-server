@@ -23,8 +23,4 @@ spec:
 
   valuesFrom:
     - kind: ConfigMap
-      name: values
-      valuesKey: values.yaml
-    - kind: Secret
-      name: secrets
-      valuesKey: encrypted.yaml
+      name: cert-manager-values

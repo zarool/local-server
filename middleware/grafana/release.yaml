@@ -24,7 +24,5 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: grafana-values
-      valuesKey: values.yaml
     - kind: Secret
       name: grafana-secrets
-      valuesKey: encrypted.yaml
