@@ -9,8 +9,3 @@ configMapGenerator:
   - name: nginx-values
     files:
       - values.yaml
-
-secretGenerator:
-  - name: nginx-secrets
-    files:
-      - encrypted.yaml

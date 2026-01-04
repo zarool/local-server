@@ -9,8 +9,3 @@ configMapGenerator:
   - name: cert-manager-values
     files:
       - values.yaml
-
-secretGenerator:
-  - name: cert-manager-secrets
-    files:
-      - encrypted.yaml
