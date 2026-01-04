@@ -1,0 +1,51 @@
+grafana:
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - grafana.worker.local
+
+  persistence:
+    enabled: true
+    storageClassName: local-path-retain
+    accessModes:
+      - ReadWriteOnce
+    size: 20Gi
+
+  initChownData:
+    enabled: false
+
+  defaultDashboardsTimezone: browser
+
+alertmanager:
+  enabled: false
+
+prometheusOperator:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 400Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+
+
+prometheus:
+  prometheusSpec:
+    resources:
+      limits:
+        cpu: 200m
+        memory: 300Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+
+
+    storageSpec:
+     volumeClaimTemplate:
+       spec:
+         storageClassName: local-path-retain
+         resources:
+           requests:
+             storage: 50Gi
