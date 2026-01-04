@@ -14,4 +14,4 @@ if [ ! -f $HELMPATH ]; then
     exit 1
 fi
 
-helmfile sync --file $HELMPATH
+helmfile apply --file $HELMPATH

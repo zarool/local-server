@@ -20,8 +20,8 @@ grafana:
 
   resources:
     limits:
-      cpu: 200m
-      memory: 700Mi
+      cpu: 300m
+      memory: 1Gi
     requests:
       cpu: 100m
       memory: 128Mi
@@ -30,7 +30,7 @@ grafana:
     dashboards:
       resources:
         limits:
-          cpu: 100m
+          cpu: 200m
           memory: 100Mi
         requests:
           cpu: 50m
@@ -38,7 +38,7 @@ grafana:
     datasources:
       resources:
         limits:
-          cpu: 100m
+          cpu: 200m
           memory: 100Mi
           requests:
             cpu: 50m

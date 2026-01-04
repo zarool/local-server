@@ -1,0 +1,28 @@
+name: GitOps Deploy
+on:
+  push:
+    paths:
+      - 'local-server/**'
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Helmfile
+        run: |
+          curl -L https://github.com/helmfile/helmfile/releases/download/v0.160.0/helmfile_0.160.0_linux_amd64.tar.gz | tar xz
+          sudo mv helmfile /usr/local/bin/
+
+      - name: Deploy Changed Charts
+        run: |
+          CHANGES=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | grep 'helmfile.yaml' || true)
+
+          for file in $CHANGES; do
+            echo "Applying $file..."
+            helmfile apply -f $file
+          done
