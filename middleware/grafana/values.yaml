@@ -18,6 +18,33 @@ grafana:
 
   defaultDashboardsTimezone: browser
 
+  resources:
+    limits:
+      cpu: 200m
+      memory: 700Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  sidecar:
+    dashboards:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 100Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+    datasources:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 50Mi
+
+
 alertmanager:
   enabled: false
 
@@ -25,7 +52,7 @@ prometheusOperator:
   resources:
     limits:
       cpu: 200m
-      memory: 400Mi
+      memory: 200Mi
     requests:
       cpu: 100m
       memory: 100Mi
@@ -36,7 +63,7 @@ prometheus:
     resources:
       limits:
         cpu: 200m
-        memory: 300Mi
+        memory: 400Mi
       requests:
         cpu: 100m
         memory: 100Mi
