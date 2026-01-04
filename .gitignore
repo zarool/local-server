@@ -1,2 +1,2 @@
-./helm-apply.sh
-./configs/
+helm-apply.sh
+configs/
