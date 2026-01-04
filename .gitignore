@@ -1,3 +1,2 @@
 ./helm-apply.sh
-./docs/k8s.md
-./configs
+./configs/
