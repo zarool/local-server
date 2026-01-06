@@ -2,7 +2,7 @@ name: GitOps Deploy
 on:
   push:
     paths:
-      - 'local-server/**'
+      - 'middleware/**'
 
 jobs:
   deploy:
