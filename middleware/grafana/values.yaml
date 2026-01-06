@@ -45,7 +45,7 @@ grafana:
             memory: 50Mi
 
 alertmanager:
-  enabled: true
+  enabled: false
 
 prometheusOperator:
   resources:
