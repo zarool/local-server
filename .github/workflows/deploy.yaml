@@ -33,6 +33,11 @@ jobs:
           helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-getter-${HELM_SECRETS_VERSION}.tgz --verify=false
           helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-post-renderer-${HELM_SECRETS_VERSION}.tgz --verify=false
 
+          SOPS_VERSION="3.11.0"
+          curl -L https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 -o sops
+          sudo chmod +x sops
+          sudo mv sops /usr/local/bin/
+
 
       - name: Deploy Changed Charts
         run: |
