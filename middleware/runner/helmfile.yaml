@@ -1,0 +1,19 @@
+repositories:
+  - name: actions-runner-controller
+    url: ghcr.io/actions/actions-runner-controller-charts
+    oci: true
+
+helmDefaults:
+  createNamespace: true
+  wait: false
+  timeout: 600
+
+releases:
+  - name: runner-arc-github
+    namespace: gitops
+    chart: actions-runner-controller/gha-runner-scale-set-controller
+    version: 0.9.x
+    values:
+      - ./values.yaml
+    secrets:
+      - ./encrypted.yaml
