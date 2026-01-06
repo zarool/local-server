@@ -13,16 +13,26 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Helm with dependencies
-        uses: mamezou-tech/setup-helmfile@v2.1.0
+      - name: Install Helm
+        uses: azure/setup-helm@v4
         with:
-          install-kubectl: yes
-          install-helm: yes
+          version: latest
 
-      # - name: Install Helmfile
-      #   run: |
-      #     curl -L https://github.com/helmfile/helmfile/releases/download/v0.160.0/helmfile_0.160.0_linux_amd64.tar.gz | tar xz
-      #     sudo mv helmfile /usr/local/bin/
+      - name: Install Helmfile
+        run: |
+          HELMFILE_VERSION="0.160.0"
+          curl -L https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz | tar xz
+          sudo mv helmfile /usr/local/bin/
+          helmfile --version
+
+      - name: Install Helmfile plugins
+        run: |
+          HELM_SECRETS_VERSION="4.7.4"
+          helm plugin install https://github.com/databus23/helm-diff
+          helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-${HELM_SECRETS_VERSION}.tgz
+          helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-getter-${HELM_SECRETS_VERSION}.tgz
+          helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-post-renderer-${HELM_SECRETS_VERSION}.tgz
+
 
       - name: Deploy Changed Charts
         run: |
