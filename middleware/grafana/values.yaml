@@ -44,7 +44,6 @@ grafana:
             cpu: 50m
             memory: 50Mi
 
-
 alertmanager:
   enabled: false
 
@@ -56,7 +55,6 @@ prometheusOperator:
     requests:
       cpu: 100m
       memory: 100Mi
-
 
 prometheus:
   prometheusSpec:
