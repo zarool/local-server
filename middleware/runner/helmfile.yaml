@@ -9,11 +9,18 @@ helmDefaults:
   timeout: 600
 
 releases:
-  - name: runner-arc-github
+  - name: arc-runner-controller
     namespace: gitops
     chart: actions-runner-controller/gha-runner-scale-set-controller
-    version: 0.9.x
+    version: 0.13.x
     values:
-      - ./values.yaml
+      - ./values-controller.yaml
+
+  - name: arc-runner-set
+    namespace: gitops
+    chart: actions-runner-controller/gha-runner-scale-set
+    version: 0.13.x
+    values:
+      - ./values-runner.yaml
     secrets:
       - ./encrypted.yaml

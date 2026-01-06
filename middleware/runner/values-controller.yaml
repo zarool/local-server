@@ -7,5 +7,3 @@ resources:
     memory: 128Mi
 
 replicaCount: 1
-
-githubConfigUrl: "https://github.com/zarool/local-server"
