@@ -40,7 +40,7 @@ jobs:
     runs-on: arc-runner-set
     strategy:
       matrix:
-        chart: ${{衔 fromJson(needs.detect-changes.outputs.matrix) }}
+        chart: ${{ fromJson(needs.detect-changes.outputs.matrix) }}
       fail-fast: false # Don't kill other deploys if one fails
 
     steps:
