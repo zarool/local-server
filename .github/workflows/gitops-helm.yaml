@@ -1,4 +1,4 @@
-name: Reusable Setup and Deploy
+name: Helmfile deployment
 
 on:
   workflow_call:
