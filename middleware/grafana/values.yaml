@@ -47,7 +47,6 @@ grafana:
 alertmanager:
   enabled: false
 
-
 prometheusOperator:
   resources:
     limits:

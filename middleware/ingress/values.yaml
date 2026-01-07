@@ -2,7 +2,6 @@ controller:
   hostNetwork: false
   allowSnippetAnnotations: true
 
-
 service:
   enabled: true
   type: ClusterIP
