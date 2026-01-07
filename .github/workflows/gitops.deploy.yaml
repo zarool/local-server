@@ -31,7 +31,7 @@ jobs:
       matrix:
         chart: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
-    uses: ./.github/workflows/gitops-helm.yaml
+    uses: ./.github/workflows/gitops.helm.yaml
 
     with:
       chart_name: ${{ matrix.chart }}
