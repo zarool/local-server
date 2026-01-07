@@ -1,4 +1,4 @@
-name: Helmfile deployment
+name: "[reusable] Helmfile deployment"
 
 on:
   workflow_call:
