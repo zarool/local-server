@@ -1,0 +1,58 @@
+name: Reusable Setup and Deploy
+
+on:
+  workflow_call:
+    inputs:
+      chart_name:
+        required: true
+        type: string
+    secrets:
+      SOPS_AGE_KEY:
+        required: true
+
+jobs:
+  helmfile-deploy:
+    runs-on: arc-runner-set
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: latest
+
+      - name: Install Helmfile
+        env:
+          HELMFILE_VERSION: "1.2.3"
+
+        run: |
+          curl -L https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz | tar xz
+          sudo mv helmfile /usr/local/bin/
+          helmfile --version
+
+      - name: Install Helmfile plugins
+        env:
+          HELM_SECRETS_VERSION: "4.7.4"
+          SOPS_VERSION: "3.11.0"
+
+        run: |
+          # helm plugins
+          helm plugin install https://github.com/databus23/helm-diff --verify=false
+          helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-${HELM_SECRETS_VERSION}.tgz --verify=false
+          helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-getter-${HELM_SECRETS_VERSION}.tgz --verify=false
+          helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-post-renderer-${HELM_SECRETS_VERSION}.tgz --verify=false
+
+          # sops for secrets
+          curl -L https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 -o sops
+          sudo chmod +x sops
+          sudo mv sops /usr/local/bin/
+
+      - name: Apply Chart to cluster
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          helmfile -f middleware/${{ inputs.chart_name }}/helmfile.yaml apply
