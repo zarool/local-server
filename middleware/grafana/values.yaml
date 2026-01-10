@@ -6,6 +6,11 @@ grafana:
     hosts:
       - grafana.worker.local
 
+    tls:
+      - secretName: tls-cert
+        hosts:
+          - grafana.worker.local
+
   persistence:
     enabled: true
     storageClassName: local-path-retain
