@@ -27,15 +27,19 @@ jobs:
     needs: prepare
     if: needs.prepare.outputs.matrix != '[]'
 
+    runs-on: arc-runner-set
     strategy:
       fail-fast: false
       matrix:
         chart: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
-    with:
-      chart_name: ${{ matrix.chart }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    secrets:
-      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_SECRET_KEY }}
-
-    uses: ./.github/actions/helm-install/action.yaml
+      - name: Deploy Chart
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_SECRET_KEY }}
+        run: |
+          helmfile -f middleware/${CHART_NAME}/helmfile.yaml apply
