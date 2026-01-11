@@ -28,6 +28,7 @@ jobs:
     if: needs.prepare.outputs.matrix != '[]'
 
     strategy:
+      fail-fast: false
       matrix:
         chart: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
