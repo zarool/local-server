@@ -1,52 +1,13 @@
-name: 'Setup Helm Plugins and SOPS'
-description: 'Installs helm-diff, helm-secrets, and SOPS binary'
-
-inputs:
-  HELMFILE_VERSION:
-    description: 'Version of helmfile to install'
-    required: false
-    default: '1.2.3'
-  HELM_SECRETS_VERSION:
-    description: 'Version of helm secrets plugin to install'
-    required: false
-    default: '4.7.4'
-  SOPS_VERSION:
-    description: 'Version of SOPS to install'
-    required: false
-    default: '3.11.0'
+name: 'Apply helm chart to K8S'
+description: 'After detecting change, use helm to apply chart.'
 
 runs:
   using: "composite"
   steps:
 
-    - name: Install Helm
-      uses: azure/setup-helm@v4
-      with:
-        version: latest
-
-    - name: Install Helmfile
+    - name: Apply Chart to cluster
       shell: bash
       env:
-        HELMFILE_VERSION: ${{ inputs.HELMFILE_VERSION }}
+        SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
       run: |
-        curl -L https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz | tar xz
-        sudo mv helmfile /usr/local/bin/
-        helmfile --version
-
-    - name: Install Helm Plugins
-      shell: bash
-      env:
-        HELM_SECRETS_VERSION: ${{ inputs.HELM_SECRETS_VERSION }}
-        SOPS_VERSION: ${{ inputs.SOPS_VERSION }}
-      run: |
-
-        # Install Helm plugins
-        helm plugin install https://github.com/databus23/helm-diff --verify=false || true
-        helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-${HELM_SECRETS_VERSION}.tgz --verify=false || true
-        helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-getter-${HELM_SECRETS_VERSION}.tgz --verify=false || true
-        helm plugin install https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/secrets-post-renderer-${HELM_SECRETS_VERSION}.tgz --verify=false || true
-
-        # sops for secrets
-        curl -L https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 -o sops
-        sudo chmod +x sops
-        sudo mv sops /usr/local/bin/
+        helmfile -f middleware/${{ inputs.chart_name }}/helmfile.yaml apply

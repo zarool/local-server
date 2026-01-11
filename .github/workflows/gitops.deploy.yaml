@@ -32,10 +32,10 @@ jobs:
       matrix:
         chart: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
-    uses: ./.github/workflows/gitops.helm.yaml
-
     with:
       chart_name: ${{ matrix.chart }}
 
     secrets:
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_SECRET_KEY }}
+
+    uses: ./.github/actions/helm-install/action.yaml
