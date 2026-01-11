@@ -11,6 +11,6 @@ releases:
   - name: nginx
     namespace: ingress-controller
     chart: ingress-nginx/ingress-nginx
-    version: 4.14.x
+    version: 4.14.1
     values:
       - ./values.yaml

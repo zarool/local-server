@@ -8,19 +8,26 @@ helmDefaults:
   wait: false
   timeout: 600
 
+
+templates:
+  default: &default
+    missingFileHandler: Error
+    namespace: gitops
+    values:
+      - "./values/{{ .Release.name }}.yaml"
+    secrets:
+      - "./secrets/{{ .Release.name }}.yaml"
+
+
 releases:
   - name: arc-runner-controller
-    namespace: gitops
     chart: actions-runner-controller/gha-runner-scale-set-controller
-    version: 0.13.x
-    values:
-      - ./values-controller.yaml
+    <<: *default
+    version: 0.13.1
 
   - name: arc-runner-set
-    namespace: gitops
     chart: actions-runner-controller/gha-runner-scale-set
-    version: 0.13.x
-    values:
-      - ./values-runner.yaml
-    secrets:
-      - ./encrypted.yaml
+    <<: *default
+    needs:
+      - arc-runner-controller
+    version: 0.13.1
