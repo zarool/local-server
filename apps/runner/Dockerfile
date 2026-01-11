@@ -6,6 +6,10 @@ ENV HELMFILE_VERSION=1.2.3
 ENV HELM_SECRETS_VERSION=4.7.4
 ENV SOPS_VERSION=3.11.0
 
+ENV HELM_DATA_HOME=/usr/local/share/helm
+ENV HELM_CONFIG_HOME=/usr/local/share/helm
+ENV HELM_CACHE_HOME=/usr/local/var/cache/helm
+
 # install basic tools
 RUN : \
     && apt-get update \
@@ -15,6 +19,10 @@ RUN : \
         tar \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# create folders for helm
+RUN mkdir -p $HELM_DATA_HOME $HELM_CONFIG_HOME $HELM_CACHE_HOME \
+    && chmod -R 777 /usr/local/share/helm /usr/local/var/cache/helm
 
 # install helm 4
 RUN : \
