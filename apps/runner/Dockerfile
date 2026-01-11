@@ -8,7 +8,6 @@ ENV SOPS_VERSION=3.11.0
 
 ENV HELM_DATA_HOME=/usr/local/share/helm
 ENV HELM_CONFIG_HOME=/usr/local/share/helm
-ENV HELM_CACHE_HOME=/usr/local/var/cache/helm
 
 # install basic tools
 RUN : \
