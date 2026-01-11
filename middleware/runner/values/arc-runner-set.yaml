@@ -12,5 +12,5 @@ template:
   spec:
     containers:
       - name: runner
-        image: ghcr.io/actions/actions-runner:latest
-        command: ["/home/runner/run.sh"]
+        image: local-server-runner:0.0.1
+        imagePullPolicy: IfNotPresent
