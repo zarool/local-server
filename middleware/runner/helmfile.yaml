@@ -14,9 +14,9 @@ templates:
     missingFileHandler: Error
     namespace: gitops
     values:
-      - "./values/{{ .Release.name }}.yaml"
+      - "./values/{{ .Release.Name }}.yaml"
     secrets:
-      - "./secrets/{{ .Release.name }}.yaml"
+      - "./secrets/{{ .Release.Name }}.yaml"
 
 
 releases:
