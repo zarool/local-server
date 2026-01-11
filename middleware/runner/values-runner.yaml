@@ -1,8 +1,0 @@
-githubConfigUrl: "https://github.com/zarool/local-server"
-
-minRunners: 1
-maxRunners: 2
-
-controllerServiceAccount:
-  namespace: gitops
-  name: arc-runner-controller-gha-rs-controller
