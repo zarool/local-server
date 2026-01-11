@@ -20,8 +20,9 @@ RUN : \
     && rm -rf /var/lib/apt/lists/*
 
 # create folders for helm
-RUN mkdir -p $HELM_DATA_HOME $HELM_CONFIG_HOME $HELM_CACHE_HOME \
-    && chmod -R 777 /usr/local/share/helm /usr/local/var/cache/helm
+RUN : \
+    && mkdir -p $HELM_DATA_HOME $HELM_CONFIG_HOME \
+    && chmod -R 777 /usr/local/share/helm
 
 # install helm 4
 RUN : \
