@@ -15,17 +15,17 @@ jobs:
     runs-on: arc-runner-set
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      # - name: Checkout
+      #   uses: actions/checkout@v4
+      #   with:
+      #     fetch-depth: 0
 
-      - name: Install Helm, helmfile and dependencies
-        uses: ./.github/actions/helm-install
-        with:
-          HELMFILE_VERSION: "1.2.3"
-          HELM_SECRETS_VERSION: "4.7.4"
-          SOPS_VERSION: "3.11.0"
+      # - name: Install Helm, helmfile and dependencies
+      #   uses: ./.github/actions/helm-install
+      #   with:
+      #     HELMFILE_VERSION: "1.2.3"
+      #     HELM_SECRETS_VERSION: "4.7.4"
+      #     SOPS_VERSION: "3.11.0"
 
       - name: Apply Chart to cluster
         env:
