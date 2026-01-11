@@ -61,7 +61,6 @@ prometheusOperator:
       cpu: 100m
       memory: 100Mi
 
-
 prometheus:
   prometheusSpec:
     resources:
