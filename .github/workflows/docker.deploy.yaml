@@ -1,4 +1,4 @@
-name: GitOps Helm
+name: GitOps Docker
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
           JSON_ARRAY=$(echo "$DIFF" | jq -R . | jq -s -c .)
           echo "matrix=$JSON_ARRAY" >> $GITHUB_OUTPUT
 
-  deploy:
+  build:
     needs: prepare
     if: needs.prepare.outputs.matrix != '[]'
 
@@ -42,4 +42,4 @@ jobs:
           CHART_NAME: ${{ matrix.chart }}
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_SECRET_KEY }}
         run: |
-          helmfile -f middleware/${CHART_NAME}/helmfile.yaml apply
+          echo "Building docker"
