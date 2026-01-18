@@ -1,7 +1,7 @@
 githubConfigUrl: "https://github.com/zarool/local-server"
 
 minRunners: 1
-maxRunners: 3
+maxRunners: 4
 
 controllerServiceAccount:
   namespace: gitops

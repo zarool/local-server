@@ -20,6 +20,10 @@ Contains helmfiles and values for used charts in deployment.
 
 Folder for Docker image creation and pushing to local registry
 
+| Release name          | Description                     | Version   |
+| :-------------------- | :------------------------------ | --------: |
+| local-server-runner   | used inside arc-runner-set      | `0.0.1`   |
+
 3. `src/`
 
 Application code
