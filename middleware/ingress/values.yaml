@@ -1,6 +1,7 @@
 controller:
   hostNetwork: true
   allowSnippetAnnotations: true
+  dnsPolicy: CLusterFirstWithHostNet
 
   extraArgs:
     default-ssl-certificate: "ingress-controller/tls-cert"
