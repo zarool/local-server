@@ -6,6 +6,6 @@ controller:
   extraArgs:
     default-ssl-certificate: "ingress-controller/tls-cert"
 
-# service:
-#   enabled: true
-#   type: ClusterIP
+service:
+  enabled: true
+  type: ClusterIP
