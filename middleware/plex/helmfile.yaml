@@ -1,0 +1,16 @@
+repositories:
+- name: plex
+  url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
+
+helmDefaults:
+  createNamespace: true
+  wait: false
+  timeout: 600
+
+releases:
+  - name: plex
+    namespace: streaming
+    chart: plex/plex-media-server
+    version: 1.4.0
+    values:
+      - ./values.yaml
