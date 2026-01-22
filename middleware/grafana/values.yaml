@@ -9,7 +9,7 @@ grafana:
     tls:
       - secretName: tls-cert
         hosts:
-          - grafana.worker.local
+          - grafana.worker
 
   persistence:
     enabled: true

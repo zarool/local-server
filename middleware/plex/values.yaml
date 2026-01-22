@@ -12,7 +12,7 @@ ingress:
   enabled: true
   ingressClassName: "nginx"
 
-  url: "plex.worker.local"
+  url: "plex.worker"
 
 
 pms:
