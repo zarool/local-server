@@ -4,7 +4,7 @@ grafana:
     enabled: true
     ingressClassName: nginx
     hosts:
-      - grafana.worker.local
+      - grafana.worker
 
     tls:
       - secretName: tls-cert
