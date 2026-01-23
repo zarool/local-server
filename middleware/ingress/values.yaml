@@ -1,5 +1,5 @@
 controller:
-  hostNetwork: false
+  hostNetwork: true
   # dnsPolicy: CLusterFirstWithHostNet
 
   config:
