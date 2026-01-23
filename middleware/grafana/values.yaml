@@ -63,6 +63,7 @@ prometheusOperator:
 
 prometheus:
   prometheusSpec:
+    serviceDiscoveryRole: EndpointSlice
     resources:
       limits:
         cpu: 300m
