@@ -4,12 +4,12 @@ grafana:
     enabled: true
     ingressClassName: nginx
     hosts:
-      - grafana.worker
+      - grafana.cloud.worker
 
-    tls:
-      - secretName: tls-cert
-        hosts:
-          - grafana.worker
+    # tls:
+    #   - secretName: tls-cert
+    #     hosts:
+    #       - grafana.worker
 
   persistence:
     enabled: true

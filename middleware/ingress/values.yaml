@@ -1,11 +1,16 @@
 controller:
   hostNetwork: false
-  allowSnippetAnnotations: true
   # dnsPolicy: CLusterFirstWithHostNet
+
+  config:
+    allow-snippet-annotations: "true"
+    compute-full-forwarded-for: "true"
+    use-forwarded-headers: "true"
+    force-ssl-redirect: "true"
 
   extraArgs:
     default-ssl-certificate: "ingress-controller/tls-cert"
 
-service:
-  enabled: true
-  type: ClusterIP
+# service:
+#   enabled: true
+#   type: ClusterIP
