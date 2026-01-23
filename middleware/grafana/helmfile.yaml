@@ -11,7 +11,7 @@ releases:
   - name: grafana
     namespace: monitoring
     chart: prometheus/kube-prometheus-stack
-    version: 80.13.2
+    version: 81.2.1
     values:
       - ./values.yaml
     secrets:
