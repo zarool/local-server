@@ -7,15 +7,12 @@ resources:
     memory: 512Mi
 
 
-
 ingress:
   enabled: true
   className: "nginx"
 
   hosts:
     - host: streaming.cloud.worker
-
-
 
 persistence:
   config:
@@ -29,3 +26,6 @@ persistence:
 
     storageClass: local-path
     size: 30Gi
+
+metrics:
+  enabled: true
