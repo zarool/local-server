@@ -13,6 +13,9 @@ ingress:
 
   hosts:
     - host: streaming.cloud.worker
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
 
 persistence:
   config:
