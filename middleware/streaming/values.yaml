@@ -1,0 +1,31 @@
+resources:
+  limits:
+    cpu: 1
+    memory: 6Gi
+  requests:
+    cpu: 200m
+    memory: 512Mi
+
+
+
+ingress:
+  enabled: true
+  className: "nginx"
+
+  hosts:
+    - host: streaming.cloud.worker
+
+
+
+persistence:
+  config:
+    enabled: true
+
+    storageClass: local-path
+    size: 5Gi
+
+  media:
+    enabled: true
+
+    storageClass: local-path
+    size: 30Gi

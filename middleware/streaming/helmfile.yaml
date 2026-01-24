@@ -1,6 +1,6 @@
 repositories:
-- name: plex
-  url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
+- name: jellyfin
+  url: https://jellyfin.github.io/jellyfin-helm
 
 helmDefaults:
   createNamespace: true
@@ -8,9 +8,9 @@ helmDefaults:
   timeout: 600
 
 releases:
-  - name: plex
+  - name: jellyfin
     namespace: streaming
-    chart: plex/plex-media-server
-    version: 1.4.0
+    chart:  jellyfin/ jellyfin
+    version: 3.0.0
     values:
       - ./values.yaml
