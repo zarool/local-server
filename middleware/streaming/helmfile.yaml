@@ -10,7 +10,7 @@ helmDefaults:
 releases:
   - name: jellyfin
     namespace: streaming
-    chart:  jellyfin/ jellyfin
+    chart:  jellyfin/jellyfin
     version: 2.7.0
     values:
       - ./values.yaml
