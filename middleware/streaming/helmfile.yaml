@@ -2,15 +2,34 @@ repositories:
 - name: jellyfin
   url: https://jellyfin.github.io/jellyfin-helm
 
+- name: ngrok
+  url: https://charts.ngrok.com
+
 helmDefaults:
   createNamespace: true
   wait: false
   timeout: 600
 
+
+templates:
+  default: &default
+    missingFileHandler: Error
+    namespace: streaming
+    values:
+      - "./values/{{ .Release.Name }}.yaml"
+    secrets:
+      - "./secrets/{{ .Release.Name }}.yaml"
+
+
 releases:
   - name: jellyfin
-    namespace: streaming
+    installed: true
+    <<: *default
     chart:  jellyfin/jellyfin
     version: 2.7.0
-    values:
-      - ./values.yaml
+
+  - name: ngrok-operator
+    installed: true
+    <<: *default
+    chart:  ngrok/ngrok-operator
+    version: 0.21.1

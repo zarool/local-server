@@ -1,10 +1,10 @@
 resources:
   limits:
     cpu: 1
-    memory: 6Gi
+    memory: 10Gi
   requests:
-    cpu: 200m
-    memory: 512Mi
+    cpu: 500m
+    memory: 1Gi
 
 
 ingress:
