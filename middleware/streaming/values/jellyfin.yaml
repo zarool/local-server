@@ -9,7 +9,7 @@ resources:
 
 ingress:
   enabled: true
-  className: "ngrok"
+  className: "nginx"
 
   hosts:
     - host: streaming.cloud.worker
