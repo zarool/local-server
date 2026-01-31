@@ -29,7 +29,7 @@ releases:
     version: 2.7.0
 
   - name: ngrok-operator
-    installed: true
+    installed: false
     <<: *default
     chart:  ngrok/ngrok-operator
     version: 0.21.1
