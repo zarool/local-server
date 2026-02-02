@@ -7,7 +7,7 @@ on:
 
 jobs:
   prepare:
-    runs-on: arc-runenr-set
+    runs-on: arc-runner-set
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       run_build: ${{ steps.set-matrix.outputs.run_build }}
@@ -48,7 +48,7 @@ jobs:
   build:
     needs: prepare
     if: needs.detect-changes.outputs.run_build == 'true'
-    runs-on: arc-runenr-set
+    runs-on: arc-runner-set
     strategy:
       matrix:
         include: ${{ fromJson(needs.prepare.outputs.matrix) }}
