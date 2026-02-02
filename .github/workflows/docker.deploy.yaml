@@ -47,7 +47,7 @@ jobs:
 
   build:
     needs: prepare
-    if: needs.detect-changes.outputs.run_build == 'true'
+    if: needs.prepare.outputs.run_build == 'true'
     runs-on: arc-runner-set
     strategy:
       matrix:
