@@ -7,39 +7,63 @@ on:
 
 jobs:
   prepare:
-    runs-on: arc-runner-set
+    runs-on: arc-runenr-set
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
+      run_build: ${{ steps.set-matrix.outputs.run_build }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Prepare builds
+      - name: Get changed folders
+        id: changed-files
+        uses: tj-actions/changed-files@v42
+        with:
+          dir_names: true
+          files: apps/**
+
+      - name: Generate Matrix JSON
         id: set-matrix
         run: |
-          DIFF=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | grep '^middleware/' | cut -d/ -f2 | sort -u || true)
-          JSON_ARRAY=$(echo "$DIFF" | jq -R . | jq -s -c .)
+          folders="${{ steps.changed-files.outputs.all_changed_files }}"
+          if [ -z "$folders" ]; then
+            echo "run_build=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          JSON_ARRAY="[]"
+          for folder in $folders; do
+            IMG_NAME=$(grep 'name=' "$folder/application.conf" | cut -d'=' -f2)
+            IMG_TAG=$(grep 'version=' "$folder/application.conf" | cut -d'=' -f2)
+
+            JSON_ARRAY=$(echo $JSON_ARRAY | jq ". += [{\"path\": \"$folder\", \"name\": \"$IMG_NAME\", \"tag\": \"$IMG_TAG\"}]")
+          done
+
           echo "matrix=$JSON_ARRAY" >> $GITHUB_OUTPUT
+          echo "run_build=true" >> $GITHUB_OUTPUT
+
 
   build:
     needs: prepare
-    if: needs.prepare.outputs.matrix != '[]'
-
-    runs-on: arc-runner-set
+    if: needs.detect-changes.outputs.run_build == 'true'
+    runs-on: arc-runenr-set
     strategy:
-      fail-fast: false
       matrix:
-        chart: ${{ fromJson(needs.prepare.outputs.matrix) }}
+        include: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Build docker image
-        env:
-          CHART_NAME: ${{ matrix.chart }}
-          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_SECRET_KEY }}
+      - name: Build Docker Image
         run: |
-          echo "Building docker"
+          docker build -t ${{ matrix.name }}:${{ matrix.tag }} ./${{ matrix.path }}
+
+      - name: Export and Import to cluster registry
+        run: |
+          docker save ${{ matrix.name }}:${{ matrix.tag }} | sudo k3s ctr images import -
+
+      - name: List current images - testing only
+        run: |
+          sudo k3s ctr images list | grep ${{ matrix.name }}
