@@ -35,10 +35,10 @@ jobs:
 
           JSON_ARRAY="[]"
           for folder in $folders; do
-            IMG_NAME=$(grep 'name=' "$folder/application.conf" | cut -d'=' -f2)
-            IMG_TAG=$(grep 'version=' "$folder/application.conf" | cut -d'=' -f2)
+            IMG_NAME=$(grep 'name=' "$folder/application.conf" | cut -d'=' -f2 | xargs)
+            IMG_TAG=$(grep 'version=' "$folder/application.conf" | cut -d'=' -f2 | xargs)
 
-            JSON_ARRAY=$(echo $JSON_ARRAY | jq ". += [{\"path\": \"$folder\", \"name\": \"$IMG_NAME\", \"tag\": \"$IMG_TAG\"}]")
+            JSON_ARRAY=$(echo "$JSON_ARRAY" | jq -c ". += [{\"path\": \"$folder\", \"name\": \"$IMG_NAME\", \"tag\": \"$IMG_TAG\"}]")
           done
 
           echo "matrix=$JSON_ARRAY" >> $GITHUB_OUTPUT
