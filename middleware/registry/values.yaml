@@ -1,0 +1,15 @@
+persistence:
+  enabled: true
+  size: 50Gi
+
+service:
+  name: registry
+  type: ClusterIP
+  port: 5000
+
+
+extraEnvVars:
+  - name: OTEL_TRACES_EXPORTER
+    value: "none"
+  - name: OTEL_METRICS_EXPORTER
+    value: "none"

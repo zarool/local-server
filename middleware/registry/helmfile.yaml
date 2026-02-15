@@ -1,0 +1,16 @@
+repositories:
+- name: twuni
+  url: https://twuni.github.io/docker-registry.helm
+
+helmDefaults:
+  createNamespace: true
+  wait: false
+  timeout: 600
+
+releases:
+  - name: docker-registry
+    namespace: gitops
+    chart: twuni/docker-registry
+    version: 3.0.0
+    values:
+      - ./values.yaml

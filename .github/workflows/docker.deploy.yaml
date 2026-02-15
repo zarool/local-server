@@ -50,6 +50,7 @@ jobs:
     if: needs.prepare.outputs.run_build == 'true'
     runs-on: arc-runner-set
     strategy:
+      fail-fast: false
       matrix:
         include: ${{ fromJson(needs.prepare.outputs.matrix) }}
 
