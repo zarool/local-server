@@ -1,5 +1,8 @@
 name: GitOps Docker
 
+env:
+  DOCKER_REGISTRY: "docker-registry:5000"
+
 on:
   push:
     paths:
@@ -57,13 +60,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Prepare docker instance
+        run: |
+          sudo mkdir -p /etc/docker
+          echo '{ "insecure-registries":["${{DOCKER_REGISTRY}}"] }' | sudo tee /etc/docker/daemon.json
+          sudo kill -SIGHUP $(pidof dockerd)
+          sleep 2
+          docker info | grep -A 3 "Insecure Registries"
+
       - name: Build Docker Image
         run: |
           docker build -t ${{ matrix.name }}:${{ matrix.tag }} ./${{ matrix.path }}
 
       - name: Export and Import to cluster registry
         run: |
-          docker save ${{ matrix.name }}:${{ matrix.tag }} | sudo k3s ctr images import -
+          docker push ${{DOCKER_REGISTRY}}/${{ matrix.name }}:${{ matrix.tag }}
 
       - name: List current images - testing only
         run: |

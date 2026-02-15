@@ -9,12 +9,13 @@ controllerServiceAccount:
 
 
 containerMode:
-     type: "dind"
+  type: "dind"
 
 template:
   spec:
 
     containers:
+
     - name: runner
       image: local-server-runner:0.0.1
       command: ["/home/runner/run.sh"]
@@ -28,33 +29,3 @@ template:
           mountPath: /home/runner/_work
         - name: dind-sock
           mountPath: /var/run
-
-
-    - name: dind
-      image: docker:dind
-      args:
-        - dockerd
-        - --host=unix:///var/run/docker.sock
-        - --group=$(DOCKER_GROUP_GID)
-        - --insecure-registry=docker-registry.gitops.svc.cluster.local:5000
-      env:
-        - name: DOCKER_GROUP_GID
-          value: "123"
-      securityContext:
-        privileged: true
-      restartPolicy: Always
-      startupProbe:
-        exec:
-          command:
-            - docker
-            - info
-        initialDelaySeconds: 0
-        failureThreshold: 24
-        periodSeconds: 5
-      volumeMounts:
-        - name: work
-          mountPath: /home/runner/_work
-        - name: dind-sock
-          mountPath: /var/run
-        - name: dind-externals
-          mountPath: /home/runner/externals
