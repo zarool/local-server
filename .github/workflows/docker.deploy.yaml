@@ -60,13 +60,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Prepare docker instance
-        run: |
-          sudo mkdir -p /etc/docker
-          echo '{ "insecure-registries":["${{ env.SELF_DOCKER_REG }}"] }' | sudo tee /etc/docker/daemon.json
-          sudo kill -SIGHUP $(pidof dockerd)
-          sleep 2
-          docker info | grep -A 3 "Insecure Registries"
+      # - name: Prepare docker instance
+      #   run: |
+      #     sudo mkdir -p /etc/docker
+      #     echo '{ "insecure-registries":["${{ env.SELF_DOCKER_REG }}"] }' | sudo tee /etc/docker/daemon.json
+      #     sudo kill -SIGHUP $(pidof dockerd)
+      #     sleep 2
+      #     docker info | grep -A 3 "Insecure Registries"
 
       - name: Build Docker Image
         run: |
