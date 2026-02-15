@@ -6,7 +6,7 @@ on:
       - 'apps/**'
 
 env:
-  DOCKER_REGISTRY: "docker-registry:5000"
+  SELF_DOCKER_REG: "docker-registry:5000"
 
 jobs:
   prepare:
@@ -63,7 +63,7 @@ jobs:
       - name: Prepare docker instance
         run: |
           sudo mkdir -p /etc/docker
-          echo '{ "insecure-registries":["${{DOCKER_REGISTRY}}"] }' | sudo tee /etc/docker/daemon.json
+          echo '{ "insecure-registries":["${{ env.SELF_DOCKER_REG }}"] }' | sudo tee /etc/docker/daemon.json
           sudo kill -SIGHUP $(pidof dockerd)
           sleep 2
           docker info | grep -A 3 "Insecure Registries"
@@ -74,7 +74,7 @@ jobs:
 
       - name: Export and Import to cluster registry
         run: |
-          docker push ${{DOCKER_REGISTRY}}/${{ matrix.name }}:${{ matrix.tag }}
+          docker push ${{ env.SELF_DOCKER_REG }}/${{ matrix.name }}:${{ matrix.tag }}
 
       - name: List current images - testing only
         run: |
