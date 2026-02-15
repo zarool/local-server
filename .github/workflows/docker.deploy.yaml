@@ -1,12 +1,12 @@
 name: GitOps Docker
 
-env:
-  DOCKER_REGISTRY: "docker-registry:5000"
-
 on:
   push:
     paths:
       - 'apps/**'
+
+env:
+  DOCKER_REGISTRY: "docker-registry:5000"
 
 jobs:
   prepare:
