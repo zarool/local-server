@@ -71,4 +71,4 @@ jobs:
 
       - name: List current images - testing only
         run: |
-          sudo k3s ctr images list | grep ${{ matrix.name }}
+          docker images
