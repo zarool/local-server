@@ -3,10 +3,11 @@ persistence:
   size: 50Gi
 
 service:
-  name: registry
-  type: ClusterIP
-  port: 5000
-
+  name: docker-registry
+  type: NodePort
+  ports:
+    - port: 5000
+      nodePort: 30606
 
 extraEnvVars:
   - name: OTEL_TRACES_EXPORTER
